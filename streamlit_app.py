@@ -19,7 +19,7 @@ df = df.set_index('Fruit')
 # list for the users to pick from 
 fruit_selected = streamlit.multiselect("Pick from the list:",list(df.index),['Avocado','Strawberries'])
 
-data = df.loc(fruit_selected)
+data = df.loc[fruit_selected]
 
 # display the dataset
 streamlit.dataframe(data)
