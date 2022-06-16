@@ -27,23 +27,29 @@ data = df.loc[fruit_selected]
 # display the dataset
 streamlit.dataframe(data)
 
+# create a function to get fruit info from fruityvice 
+def get_fruityvice_data(this_fruit_choice):
+    fruitvise_response = requests.get('https://www.fruityvice.com/api/fruit/'+fruit_choice)
+    fruit_df = pd.json_normalize(fruitvise_response.json())
+    return fruit_df
+
 # new section to display API calls 
 streamlit.header('Fruitvise fruit Advice..!!')
 try:
     fruit_choice = streamlit.text_input('What fruit would you like information about?')
     if not fruit_choice:
         streamlit.error('Please enter a fruit to get information')
-    else:      
-        streamlit.write('User Entered: ',fruit_choice)
-        fruitvise_response = requests.get('https://www.fruityvice.com/api/fruit/'+fruit_choice)
+    else:     
+         fruit_df = get_fruityvice_data(fruit_choice)
+         streamlit.dataframe(fruit_df)
+
 except URLError as e:
   streamlit.error()
 
 
 
 # raw data 
-streamlit.text(fruitvise_response.json())
-fruit_df = pd.json_normalize(fruitvise_response.json())
+
 streamlit.dataframe(fruit_df)
 
 streamlit.stop()
