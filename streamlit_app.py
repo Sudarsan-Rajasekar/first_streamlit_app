@@ -26,5 +26,5 @@ data = df.loc[fruit_selected]
 streamlit.dataframe(data)
 
 # new section to display API calls 
-fruitvise_response = requests.response('https://www.fruityvice.com/api/fruit/watermelon')
+fruitvise_response = requests.get('https://www.fruityvice.com/api/fruit/watermelon')
 streamlit.text(fruitvise_response)
