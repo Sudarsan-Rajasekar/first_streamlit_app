@@ -39,12 +39,14 @@ try:
 except URLError as e:
   streamlit.error()
 
-streamlit.stop()
+
 
 # raw data 
 streamlit.text(fruitvise_response.json())
 fruit_df = pd.json_normalize(fruitvise_response.json())
 streamlit.dataframe(fruit_df)
+
+streamlit.stop()
 
 # welcome from snowflake
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
