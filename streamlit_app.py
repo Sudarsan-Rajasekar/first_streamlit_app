@@ -1,5 +1,6 @@
 import streamlit
 import pandas as pd
+import requests 
 
 streamlit.title("My Parents new healthy dinner")
 streamlit.header("Breakfast Favorites")
@@ -24,3 +25,6 @@ data = df.loc[fruit_selected]
 # display the dataset
 streamlit.dataframe(data)
 
+# new section to display API calls 
+fruitvise_response = requests.response('https://www.fruityvice.com/api/fruit/watermelon')
+streamlit.text(fruitvise_response)
