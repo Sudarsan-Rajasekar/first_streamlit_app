@@ -48,9 +48,6 @@ except URLError as e:
 
 
 
-# raw data 
-
-streamlit.dataframe(fruit_df)
 
 streamlit.stop()
 
