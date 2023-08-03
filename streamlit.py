@@ -1,11 +1,24 @@
-from sklearn.datasets import load_iris
+import yfinance as yf
 import streamlit as st
 import pandas as pd
+import sys
 
-st.write("""
-# My First app
-Display iris data as a line chart 
-         """)
 
-data = pd.DataFrame(load_iris()['data'])
-st.line_chart(data.iloc[:,0])
+st.write(
+    """
+# Display Simple dataset
+
+Display Wine dataset
+"""
+)
+
+
+df = pd.read_csv(r'E:\Data\wine.csv' )
+ 
+st.write(df)
+
+st.line_chart(df['alcohol'])
+
+
+
+
