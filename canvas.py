@@ -11,10 +11,11 @@ from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import pickle
 
+st.write("Draw any digit in the Canvas..(0 to 9)")
 canvas_img = st_canvas(
         fill_color="rgba(255, 165, 0, 0.5)",  # Fixed fill color with some opacity
-        stroke_width=12,
-        background_color="rgba(255, 255, 255, 0.3)",
+        stroke_width=8,
+        background_color="rgba(255, 255, 255)",
         # background_image=Image.open(bg_image) if bg_image else None,
         # update_streamlit=realtime_update,
         height=28*5,
@@ -24,16 +25,19 @@ canvas_img = st_canvas(
         # key="full_app",
     )
 img_arr = canvas_img.image_data
-st.write(img_arr.shape)
+# st.write(img_arr.shape)
 
 # Define the CNN model
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.conv_layers = nn.Sequential(
-            nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(1, 8, kernel_size=3, stride=1, padding=1),
+            nn.Conv2d(8, 16, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Dropout(0.25),
+            nn.Conv2d(16, 32, kernel_size=3, stride=1, padding=1),
             nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2, stride=2)
@@ -41,6 +45,7 @@ class Net(nn.Module):
         self.fc_layers = nn.Sequential(
             nn.Linear(64 * 7 * 7, 128),
             nn.ReLU(),
+            nn.Dropout(0.25),
             nn.Linear(128, 10)
         )
 
@@ -49,7 +54,7 @@ class Net(nn.Module):
         x = x.view(x.size(0), -1)
         x = self.fc_layers(x)
         return x
-
+    
 # Load the trained model from the pickle file
 model_filename = 'my_model.pkl'
 with open(model_filename, 'rb') as file:
@@ -69,7 +74,9 @@ img = Image.fromarray(img_arr)
 img = img.resize((28,28))
 img = img.convert('L')
 
-reflection_img = st_canvas(background_image=img, height=28*5,width=28*5)
+# st_canvas(background_image=img ,height=28*5,
+#         width=28*5)
+
 
 
 # Convert the image to a tensor and apply normalization
@@ -78,13 +85,16 @@ transform = transforms.Compose([
     transforms.Normalize((0.5,), (0.5,))  # Normalize to range [-1, 1]
 ])
 img_tensor = transform(img).unsqueeze(0)
-st.write(img_tensor)
+img_tensor = 1-img_tensor
+# st.write(img_tensor)
+
 
 with torch.no_grad():
     pred = model(img_tensor)
-    st.write(pred.detach().numpy())
+    # st.write(pred.detach().numpy())
     arr = nn.Softmax()(pred)
     arr = arr.detach().numpy()
     # st.write(np.sort(arr.detach().numpy()))
-    st.write(arr)
-    st.write(np.argmax(arr))
+    # st.write(arr)
+    st.write(f"<h1 style='color: purple;'>Predicted Digit: {np.argmax(pred)}</h1>", unsafe_allow_html=True)
+    st.write()
