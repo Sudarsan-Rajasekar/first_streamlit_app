@@ -1,4 +1,5 @@
 #requirements .txt
+streamlit-drawable-canvas==0.9.3
 scikit-learn
 snowflake-connector-python
 yfinance 
