@@ -89,7 +89,7 @@ img_tensor = transform(img).unsqueeze(0)
 img_tensor = 1-img_tensor
 # st.write(img_tensor)
 
-emojis = ['🎈','🎁','🐠','👗','💄','🏈','🍫','🍅','🛴']
+emojis = ['🎈','🎁','🐠','👗','🍉','🏈','🍫','🍅','🛴','🍏','🍓','🥕','🍄']
 
 with torch.no_grad():
     pred = model(img_tensor)
@@ -98,7 +98,7 @@ with torch.no_grad():
     arr = arr.detach().numpy()
     digit = np.argmax(pred)
     st.write("")
-    st.write(f"<h5 style='color: purple;'>Predicted Digit: {digit}</h5>", unsafe_allow_html=True)
+    st.write(f"<h1 style='color: purple;'>Predicted Digit: {digit}</h1>", unsafe_allow_html=True)
     emoji = random.choice(emojis)
-    st.write(emoji*digit)
+    st.write(f"<h3 style='color: purple;'>{emoji*digit}</h3>", unsafe_allow_html=True)
 
