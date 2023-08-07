@@ -10,6 +10,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 import pickle
+import random
 
 st.write("Draw any digit in the Canvas..(0 to 9)")
 canvas_img = st_canvas(
@@ -88,13 +89,16 @@ img_tensor = transform(img).unsqueeze(0)
 img_tensor = 1-img_tensor
 # st.write(img_tensor)
 
+emojis = ['🎈','🎁','🐠','👗','💄','🏈','🍫','🍅','🛴']
 
 with torch.no_grad():
     pred = model(img_tensor)
     # st.write(pred.detach().numpy())
     arr = nn.Softmax()(pred)
     arr = arr.detach().numpy()
-    # st.write(np.sort(arr.detach().numpy()))
-    # st.write(arr)
-    st.write(f"<h1 style='color: purple;'>Predicted Digit: {np.argmax(pred)}</h1>", unsafe_allow_html=True)
-    st.write()
+    digit = np.argmax(pred)
+    st.write("")
+    st.write(f"<h5 style='color: purple;'>Predicted Digit: {digit}</h5>", unsafe_allow_html=True)
+    emoji = random.choice(emojis)
+    st.write(emoji*digit)
+
