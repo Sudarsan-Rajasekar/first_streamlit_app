@@ -3,3 +3,5 @@ streamlit-drawable-canvas
 scikit-learn
 snowflake-connector-python
 yfinance 
+torch
+pickle
