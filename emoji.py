@@ -1,6 +1,8 @@
 import streamlit as st
 import random 
 
+st.set_page_config(page_title='Emojis', page_icon='🎈', layout='wide')
+
 if 'random_text' not in st.session_state:
     st.session_state.random_text = ''
 
@@ -50,7 +52,9 @@ def get_random_emojis(vocab):
 if st.session_state.vRefresh:
     st.session_state.random_text, st.session_state.random_emoji_dict = get_random_emojis(vocab)
 
-st.header(f':blue[{st.session_state.random_text}]')
+_,_,col1 = st.columns([1,1,3])
+with col1:
+    st.title(f':blue[{st.session_state.random_text}]')
     
 
 
@@ -60,9 +64,9 @@ cols = [col1, col2, col3, col4]
 
 
 
-recol1, _,_,_ = st.columns(4)
+_,_,recol1 = st.columns([1,1,3])
 with recol1:
-    if st.button('🔃',use_container_width=True):
+    if st.button('🔃',use_container_width=False):
         st.session_state.vRefresh = False
         st.session_state.selected_emoji = ''
         st.session_state.disableButton = False
