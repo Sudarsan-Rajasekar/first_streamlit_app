@@ -18,8 +18,8 @@ col2.markdown('#### Piece Dimensions')
 _,col1, col2,_, col3, col4,_,_ = st.columns(8)
 m = col1.number_input('Width of the glass sheet (in inches)',1,100,10,1)  # Width of the glass sheet (in inches)
 n = col2.number_input('Height of the glass sheet (in inches)',1,100,10,1)  # Width of the glass sheet (in inches)
-a = col3.number_input(f'Width of each piece \n  (in inches)',1,100,3,1)  
-b = col4.number_input(f'Height of each piece \n  (in inches)',1,100,3,1)  
+a = col3.number_input(f'Width of each piece          \n  (in inches)',1,100,3,1)  
+b = col4.number_input(f'Height of each piece        \n  (in inches)',1,100,3,1)  
 
 st.write('----')
 st.subheader('Trying with different Orientations')
@@ -51,22 +51,27 @@ class GlassCutter():
 
         # iterate through all combinations of orientation and retrieve the coordinates 
         for k in self.coordDict.keys():
-            for i in range(0,m,a):
-                for j in range(0,n,b):
-                    if i + a <=m and j + b <=n: #constraint to avoid overflow
+            self.m,self.n = self.orientationDict[k][0]
+            self.a,self.b  = self.orientationDict[k][1]
+            for i in range(0,self.m,self.a):
+                for j in range(0,self.n,self.b):
+                    if i + self.a <= self.m and j + self.b <=self.n: #constraint to avoid overflow
                         self.coordDict[k].append((i,j))
 
         # calculate Wastage 
         for k, vCoordinates in self.coordDict.items():
+            # update the dimensions 
+            self.m,self.n = self.orientationDict[k][0]
+            self.a,self.b  = self.orientationDict[k][1]
             vColor = False 
             # Sheet Array
-            S = np.ones(shape=(m,n))
+            S = np.ones(shape=(self.m,self.n))
             # Piece Array Mask
-            P = np.ones(shape=(m,n))
+            P = np.ones(shape=(self.m,self.n))
             # for visualization
-            PMask = np.ones(shape=(m,n))
+            PMask = np.ones(shape=(self.m,self.n))
             for coord in vCoordinates:
-                P[coord[0]:coord[0]+a, coord[1]:coord[1]+b] = 0
+                P[coord[0]:coord[0]+self.a, coord[1]:coord[1]+self.b] = 0
             # Overlay Sheet and Pieces
             W = S*P
             
@@ -79,11 +84,11 @@ class GlassCutter():
                 textArray = []
 
                 for idx, (coord, color) in enumerate(zip(vCoordinates,colorArray)):
-                    W[coord[0]:coord[0]+a, coord[1]:coord[1]+b] = color
+                    W[coord[0]:coord[0]+self.a, coord[1]:coord[1]+self.b] = color
                     textArray.append(
                         go.Scatter(
-                            y = [(coord[0]+(a/2)-0.5)], #expects array input
-                            x = [(coord[1]+(b/2)-0.5)],
+                            y = [(coord[0]+(self.a/2)-0.5)], #expects array input
+                            x = [(coord[1]+(self.b/2)-0.5)],
                             text = idx+1,
                             mode = 'text',
                             textposition='middle center',
