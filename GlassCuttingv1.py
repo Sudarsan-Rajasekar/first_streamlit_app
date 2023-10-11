@@ -9,11 +9,6 @@ _, h1, _ = st.columns([1.5,2,1.5])
 h1.header('Glass Cutting Problem')
 st.write('----')
 
- 
-import pulp
-
-# Create the ILP problem
-problem = pulp.LpProblem("GlassCutting", pulp.LpMinimize)
 
 # Define variables
 buff1, col1, col2, buff2 = st.columns([1,2,2,1])
