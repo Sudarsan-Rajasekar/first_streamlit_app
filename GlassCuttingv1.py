@@ -1,6 +1,5 @@
 import streamlit as st
 import numpy as np 
-import pulp
 import matplotlib.pyplot as plt 
 import plotly.express as px
 import plotly.graph_objects as go
@@ -28,6 +27,8 @@ n = col2.number_input('Height of the glass sheet (in inches)',1,100,10,1)  # Wid
 a = col3.number_input(f'Width of each piece          \n  (in inches)',1,100,3,1)  
 b = col4.number_input(f'Height of each piece        \n  (in inches)',1,100,3,1)  
 
+st.write('----')
+st.subheader('Trying with different Orientations')
 
 class GlassCutter():
     def __init__(self,m,n,a,b):
