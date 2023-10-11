@@ -18,8 +18,8 @@ col2.markdown('#### Piece Dimensions')
 _,col1, col2,_, col3, col4,_,_ = st.columns(8)
 m = col1.number_input('Width of the glass sheet (in inches)',1,100,10,1)  # Width of the glass sheet (in inches)
 n = col2.number_input('Height of the glass sheet (in inches)',1,100,10,1)  # Width of the glass sheet (in inches)
-a = col3.number_input(f'Width of each piece          (in inches)',1,100,3,1)  
-b = col4.number_input(f'Height of each piece         (in inches)',1,100,3,1)  
+a = col3.number_input(f'Width of each piece          \n  (in inches)',1,100,3,1)  
+b = col4.number_input(f'Height of each piece        \n  (in inches)',1,100,3,1)  
 
 st.write('----')
 st.subheader('Trying with different Orientations')
@@ -114,6 +114,27 @@ class GlassCutter():
                 for idx, text in enumerate(textArray):
                     fig.add_trace(text)
                     fig.data[idx+1].update(showlegend=False)
+
+                wastage_text = []
+                for i,row in enumerate(W):
+                    for j,element in enumerate(row):
+                        if element == 1:
+                            wastage_text.append(
+                                go.Scatter(
+                                    y = [i], #expects array input
+                                    x = [j],
+                                    text = 'W',
+                                    mode = 'text',
+                                    textposition='middle center',
+                                    textfont=dict(size=20, color='#FFA07A')
+                                    
+                                )
+                            )
+
+                for idx, wast in enumerate(wastage_text):
+                    fig.add_trace(wast)
+                    fig.data[len(textArray)+idx+1].update(showlegend=False)
+                
                 st.plotly_chart(fig)
 
 
