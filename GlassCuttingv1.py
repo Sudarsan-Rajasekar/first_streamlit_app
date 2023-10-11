@@ -118,7 +118,7 @@ class GlassCutter():
 
 
                 st.write('Wastage (in inches^2)')
-                st.error(W.sum())
+                st.error(W[W==1].sum())
                 st.write('Total Pieces')
                 st.info(len(vCoordinates))
                 st.write('Coordinates')
