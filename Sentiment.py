@@ -10,7 +10,7 @@ def get_model():
 classifier = get_model()
 
 vSentence = st.text_input('Enter text to predict sentiment...')
-st.write(vSentence)
+
 if vSentence is not None or vSentence == '':
     result = classifier(vSentence)[0]
     if result['label'] == 'POSITIVE':
