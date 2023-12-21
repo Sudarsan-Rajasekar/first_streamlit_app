@@ -9,7 +9,7 @@ faker
 plotly
 transformers
 openai
-dotenv
+python-dotenv
 matplotlib
 numpy
 pandas
