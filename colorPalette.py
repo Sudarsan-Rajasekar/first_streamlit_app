@@ -7,9 +7,6 @@ import pandas as pd
 import json
 
 
-
-
-secret_key = dotenv_values('.env')['OPEN_AI_API_KEY']
 openai.api_key = st.secrets.secret_key
 
 def display_colors(color_list):
