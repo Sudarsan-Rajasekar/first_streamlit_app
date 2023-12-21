@@ -8,7 +8,7 @@ torchvision==0.15.2
 faker
 plotly
 transformers
-openai
+openai<1
 python-dotenv
 matplotlib
 numpy
