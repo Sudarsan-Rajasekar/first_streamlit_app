@@ -10,7 +10,7 @@ import json
 
 
 secret_key = dotenv_values('.env')['OPEN_AI_API_KEY']
-openai.api_key = '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'
+openai.api_key = st.secrets.secret_key
 
 def display_colors(color_list):
     color_block = "".join([f'<div style="background-color: {color}; height: 400px; width: 100px; display: inline-block; margin-right: -4px;"></div>' for color in color_list])
