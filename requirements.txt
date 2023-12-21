@@ -8,3 +8,8 @@ torchvision==0.15.2
 faker
 plotly
 transformers
+openai
+dotenv
+matplotlib
+numpy
+pandas
